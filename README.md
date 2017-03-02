@@ -2,6 +2,6 @@
 
 #### Plan ####
 
-- [] Uncompleted task
+- [ ] Uncompleted task
 - [x] Completed task
 
