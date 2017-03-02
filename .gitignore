@@ -1,6 +1,7 @@
 *.o
 *.a
 *.d
+.*
 
 clientserver/test/myserver
 clientserver/test/myclient
