@@ -19,13 +19,9 @@ LDFLAGS   = -g -Linclude/
 LDLIBS =
 
 # Targets
-PROGS = news_InMemory
+PROGS = inmemory
 
 all: $(PROGS)
-
-install: $(PROGS)
-	cp $(PROGS) /usr/local/bin
-
 
 # Targets rely on implicit rules for compiling and linking, the following is executed!
 # $(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
@@ -38,26 +34,28 @@ install: $(PROGS)
 #myserver: myserver.o
 #myclient: myclient.o
 
-news_InMemory:
-	$(MAKE) -C src/
-	cp src/inmemory $@
+inmemory: inmemory.o
 
 # Phony targets
 .PHONY: all clean
 
 # Standard clean
 clean:
-	rm -f *.o $(PROGS)
-	$(MAKE) -C src/ clean
+	rm -f *.o $(PROGS) deps/*.d
 
 # Generate dependencies in *.d files
-%.d: %.cc
+# The line starting with an @ indicates print-suppression. Lines ending with a backslash indicate line splitting.
+deps/%.d: %.cc
 	@set -e; rm -f $@; \
          $(CPP) -MM $(CPPFLAGS) $< > $@.$$$$; \
          sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
          rm -f $@.$$$$
 
 # Include the *.d files
-SRC = $(wildcard include/*.cc)
+SRC = $(wildcard *.cc)
 #keyword include calls the "created" makefiles and runs them
-include $(SRC:.cc=.d)
+include deps/$(SRC:.cc=.d)
+
+#Target which allows you to print variables as "make print-VARIABLE"
+print-%  : ; @echo $* = $($*)
+
