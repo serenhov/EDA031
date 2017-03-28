@@ -19,9 +19,8 @@ LDFLAGS   = -g -Linclude/
 LDLIBS =
 
 # Targets
-PROGS = news_InMemory
 
-all: $(PROGS)
+all: news
 
 install: $(PROGS)
 	cp $(PROGS) /usr/local/bin
@@ -38,26 +37,27 @@ install: $(PROGS)
 #myserver: myserver.o
 #myclient: myclient.o
 
-news_InMemory:
+news:
 	$(MAKE) -C src/
-	cp src/inmemory $@
+	cp src/inmemory inmemory
+	cp src/client client
 
 # Phony targets
 .PHONY: all clean
 
 # Standard clean
 clean:
-	rm -f *.o $(PROGS)
+	rm -f *.o client inmemory
 	$(MAKE) -C src/ clean
 
 # Generate dependencies in *.d files
-%.d: %.cc
-	@set -e; rm -f $@; \
-         $(CPP) -MM $(CPPFLAGS) $< > $@.$$$$; \
-         sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
-         rm -f $@.$$$$
-
-# Include the *.d files
-SRC = $(wildcard include/*.cc)
-#keyword include calls the "created" makefiles and runs them
-include $(SRC:.cc=.d)
+#%.d: %.cc
+#	@set -e; rm -f $@; \
+#         $(CPP) -MM $(CPPFLAGS) $< > $@.$$$$; \
+#         sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+#         rm -f $@.$$$$
+#
+## Include the *.d files
+#SRC = $(wildcard include/*.cc)
+##keyword include calls the "created" makefiles and runs them
+#include $(SRC:.cc=.d)
