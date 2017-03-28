@@ -38,7 +38,7 @@ all: $(PROGS)
 
 client: client.o messagehandler.o connection.o
 
-inmemory: inmemory.o server.o connection.o
+inmemory: run_server.o inmemory.o server.o connection.o
 
 # Phony targets
 .PHONY: all clean
