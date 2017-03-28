@@ -10,7 +10,7 @@ CPPFLAGS  = -std=c++11 -Iinclude/
 CXXFLAGS  = -g -O2 -Wall -W -pedantic-errors
 CXXFLAGS += -Wmissing-braces -Wparentheses -Wold-style-cast
 CXXFLAGS += -std=c++11
-LDFLAGS   = -g -Linclude/
+LDFLAGS   = -g
 #CPPFLAGS += -stdlib=libc++
 #CXXFLAGS += -stdlib=libc++
 #LDFLAGS +=  -stdlib=libc++
@@ -18,8 +18,10 @@ LDFLAGS   = -g -Linclude/
 # Libraries
 LDLIBS =
 
+#VPATH = include:deps:../clientserver
+
 # Targets
-PROGS = inmemory
+PROGS = client inmemory
 
 all: $(PROGS)
 
@@ -34,7 +36,9 @@ all: $(PROGS)
 #myserver: myserver.o
 #myclient: myclient.o
 
-inmemory: inmemory.o
+client: client.o messagehandler.o
+
+inmemory: inmemory.o server.o
 
 # Phony targets
 .PHONY: all clean
@@ -52,9 +56,12 @@ deps/%.d: %.cc
          rm -f $@.$$$$
 
 # Include the *.d files
-SRC = $(wildcard *.cc)
+#SRC = $(wildcard *.cc)
 #keyword include calls the "created" makefiles and runs them
-include deps/$(SRC:.cc=.d)
+#include deps/$(SRC:.cc=.d)
+SRC = $(wildcard *.cc)
+SRC := $(addprefix deps/, $(SRC))
+include $(SRC:.cc=.d)
 
 #Target which allows you to print variables as "make print-VARIABLE"
 print-%  : ; @echo $* = $($*)

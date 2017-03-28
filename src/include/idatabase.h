@@ -5,4 +5,7 @@ class IDatabase {
 public:
 
 
+};
+
+
 #endif

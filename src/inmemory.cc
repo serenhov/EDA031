@@ -1,4 +1,5 @@
 #include "inmemory.h"
+#include "idatabase.h"
 
 #include <iostream>
 
