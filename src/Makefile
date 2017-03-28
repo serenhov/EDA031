@@ -18,7 +18,7 @@ LDFLAGS   = -g
 # Libraries
 LDLIBS =
 
-#VPATH = include:deps:../clientserver
+VPATH = include:deps
 
 # Targets
 PROGS = client inmemory
@@ -36,9 +36,9 @@ all: $(PROGS)
 #myserver: myserver.o
 #myclient: myclient.o
 
-client: client.o messagehandler.o
+client: client.o messagehandler.o connection.o
 
-inmemory: inmemory.o server.o
+inmemory: inmemory.o server.o connection.o
 
 # Phony targets
 .PHONY: all clean

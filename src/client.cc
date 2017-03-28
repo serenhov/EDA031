@@ -1,4 +1,5 @@
 #include "client.h"
+#include "connection.h"
 #include <iostream>
 
 using namespace std;
