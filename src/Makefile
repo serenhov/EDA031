@@ -15,6 +15,7 @@ LDFLAGS   = -g
 #CXXFLAGS += -stdlib=libc++
 #LDFLAGS +=  -stdlib=libc++
 
+
 # Libraries
 LDLIBS =
 
@@ -38,7 +39,7 @@ all: $(PROGS)
 
 client: client.o messagehandler.o connection.o
 
-inmemory: inmemory.o server.o connection.o
+inmemory: inmemory.o server.o connection.o messagehandler.o
 
 # Phony targets
 .PHONY: all clean
