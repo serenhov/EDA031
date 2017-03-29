@@ -13,37 +13,9 @@
 #include <cstdlib>
 #include "messagehandler.h"
 
-/*int main() {
-	InMemory t;
-	t.count = 1;
-	std::cout << "t.count = " << t.count << std::endl;
-}
-*/
-/* myserver.cc: sample server program */
 
 
 using namespace std;
-
-/*
- * Read an integer from a client.
- */
-int readNumber(const shared_ptr <Connection> &conn) {
-    unsigned char byte1 = conn->read();
-    unsigned char byte2 = conn->read();
-    unsigned char byte3 = conn->read();
-    unsigned char byte4 = conn->read();
-    return (byte1 << 24) | (byte2 << 16) | (byte3 << 8) | byte4;
-}
-
-/*
- * Send a string to a client.
- */
-void writeString(const shared_ptr <Connection> &conn, const string &s) {
-    for (char c : s) {
-        conn->write(c);
-    }
-    conn->write('$');
-}
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
@@ -128,9 +100,9 @@ int main(int argc, char *argv[]) {
                             msgHand.sendCode(Protocol::ANS_LIST_ART);
                             msgHand.sendCode(Protocol::ANS_ACK); //RADERA EFTER IMPLEMENTERING
                             msgHand.sendIntParameter(0); //RADERA EFTER IMPLEMENTERING
-/* SKICKA ANTINGEN:
-msgHand.sendCode(Protocol::ANS_ACK);
-SKICKA ÖVER ANTALET ARTIKLAR
+                        /* SKICKA ANTINGEN:
+                        msgHand.sendCode(Protocol::ANS_ACK);
+                        SKICKA ÖVER ANTALET ARTIKLAR
 						ITERERA ÖVER ALL ARTIKLAR
 						msgHand.sendInt(0) ID FÖR ARTIKELN
 						msgHand.sendString("") TITEL PÅ ARTIKELN
@@ -165,7 +137,7 @@ SKICKA ÖVER ANTALET ARTIKLAR
                             msgHand.sendCode(Protocol::ANS_END);
 
                         }
-
+                        break;
                     }
                     case Protocol::COM_DELETE_ART : {
                         int grId = msgHand.receiveIntParameter();
