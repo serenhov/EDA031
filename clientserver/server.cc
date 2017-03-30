@@ -113,7 +113,8 @@ std::shared_ptr<Connection> Server::waitForActivity() const {
 			error("waitForActivity: could not find registered connection");
 		}
 		return_conn = *it;
-	}
+	}ls
+
 	return return_conn;
 }
 

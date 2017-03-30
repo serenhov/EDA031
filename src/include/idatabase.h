@@ -1,23 +1,23 @@
 #ifndef IDATABASE_H
 #define IDATABASE_H 1
 
+#include "messagehandler.h"
+#include "connection.h"
+
 #include <string>
 #include <vector>
 #include <memory>
-#include "connection.h"
 
 class IDatabase {
 public:
 	virtual ~IDatabase() = default;
-	virtual void list_groups(const std::shared_ptr<Connection>& conn) = 0;
-	virtual void create_group(const std::shared_ptr<Connection>& conn) = 0;
-	/*
-	virtual void delete_group();
-	virtual void list_articles();
-	virtual void create_article();
-	virtual void delete_article();
-	virtual void get_article();
-	*/
+	virtual void list_groups(messagehandler& msgHand) = 0;
+	virtual void create_group(messagehandler& msgHand, std::string& name) = 0;
+	virtual void delete_group(messagehandler& msgHand, unsigned int& id) = 0;
+	virtual void list_articles(messagehandler& msgHand, unsigned int& id) = 0;
+	virtual void create_article(messagehandler& msgHand, unsigned int& id, std::string& t, std::string& a, std::string& txt) = 0;
+	virtual void delete_article(messagehandler& msgHand, unsigned int& grId, unsigned int& artId) = 0;
+	virtual void get_article(messagehandler& msgHand, unsigned int& grId, unsigned int& artId) = 0;
 
 };
 
@@ -36,7 +36,8 @@ public:
 	std::string name;
 	std::vector<Article> articles;
 
-	NewsGroup(unsigned int& i, std::string& s) : id(i), name(s) {}
+	NewsGroup(unsigned int& i, std::string& s) : id(i), name(s), articles() {}
+	NewsGroup(unsigned int&& i, std::string& s) : id(i), name(s), articles() {}
 
 };
 
