@@ -10,7 +10,7 @@ CPPFLAGS  = -std=c++11 -Iinclude/
 CXXFLAGS  = -g -O2 -Wall -W -pedantic-errors
 CXXFLAGS += -Wmissing-braces -Wparentheses -Wold-style-cast
 CXXFLAGS += -std=c++11
-LDFLAGS   = -g
+LDFLAGS   = -g -lsqlite3
 #CPPFLAGS += -stdlib=libc++
 #CXXFLAGS += -stdlib=libc++
 #LDFLAGS +=  -stdlib=libc++
@@ -39,7 +39,7 @@ all: $(PROGS)
 
 client: client.o messagehandler.o connection.o
 
-inmemory: run_server.o inmemory.o server.o connection.o messagehandler.o
+inmemory: run_server.o atdisk.o server.o connection.o messagehandler.o
 
 # Phony targets
 .PHONY: all clean

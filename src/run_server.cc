@@ -1,6 +1,6 @@
 /* myserver.cc: sample server program */
 #include "idatabase.h"
-#include "inmemory.h"
+#include "atdisk.h"
 #include "messagehandler.h"
 
 #include "protocol.h"
@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-		IDatabase* database = new InMemory();
+		IDatabase* database = new AtDisk();
 
     while (true) {
         auto conn = server.waitForActivity();
