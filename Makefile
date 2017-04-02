@@ -23,7 +23,9 @@ LDLIBS =
 all: news
 
 install: $(PROGS)
-	cp $(PROGS) /usr/local/bin
+	mkdir -p bin
+	cp inmemory bin
+	cp client bin
 
 
 # Targets rely on implicit rules for compiling and linking, the following is executed!
