@@ -1,11 +1,9 @@
 # c++-project - News system #
 
-#### Plan ####
+### Instructions ###
 
-- [x] Create a magnificent Makefile, cf. point 2 in Submission of results
-  * According to Anton this is accomplished, to the extent possible at this stage. Try it out and evaluate by `git checkout anton`. If everyone agrees upon it we merge it to master. 
-- [ ] Abstract class DataBase with derived classes InMemory and InDisk (the latter in continuation) {Alexander & Anton}
-  * ...
-- [ ] Implementation of class Client {Therese & Madeleine}
-  * Decode input and encode output
-  * Indicate where and what calls that should be made in class Server
+The program is compiled and built with `make`. `make install` moves the executables to the _bin_ directory. `make clean` removes the object files and executables and clears the database. 
+
+To run the server execute: `./run_server port-number server-version`. Here server-version should be _mem_ for the in-memory version and _disk_ for the disk version. 
+
+To run the client execute: `./client hostname port-number`.
