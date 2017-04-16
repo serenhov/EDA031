@@ -22,10 +22,9 @@ LDLIBS =
 
 all: news
 
-install:
-	mkdir -p bin
-	cp client bin
-	cp run_server bin
+install: news
+	cp client /bin
+	cp run_server /bin
 
 
 # Targets rely on implicit rules for compiling and linking, the following is executed!
