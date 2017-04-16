@@ -22,11 +22,10 @@ LDLIBS =
 
 all: news
 
-install: $(PROGS)
+install:
 	mkdir -p bin
-	cp inmemory bin
-	cp atdisk bin
 	cp client bin
+	cp run_server bin
 
 
 # Targets rely on implicit rules for compiling and linking, the following is executed!
@@ -42,16 +41,16 @@ install: $(PROGS)
 
 news:
 	$(MAKE) -C src/
-	cp src/inmemory inmemory
 	cp src/client client
-	cp src/atdisk atdisk
+	cp src/run_server run_server
 
 # Phony targets
 .PHONY: all clean
 
 # Standard clean
 clean:
-	rm -f *.o client inmemory
+	rm -f client run_server newsgroups.db
+	sqlite3 newsgroups.db < schema.sql
 	$(MAKE) -C src/ clean
 
 # Generate dependencies in *.d files

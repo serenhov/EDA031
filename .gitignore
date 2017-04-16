@@ -5,6 +5,6 @@
 
 clientserver/test/myserver
 clientserver/test/myclient
-inmemory
+run_server
 client
 

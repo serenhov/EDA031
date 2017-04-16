@@ -59,7 +59,7 @@ string messagehandler::receiveString() {
     if (messagehandler::receiveCode() == Protocol::PAR_STRING) {
         int n = receiveInt();
         for (int i = 1; i <= n; i++) {
-            char ch = (char) conn.read();
+            char ch = static_cast<char>(conn.read());
             s += ch;
         }
     }
@@ -72,5 +72,5 @@ int messagehandler::receiveCode() {
 }
 
 void messagehandler::sendByte(int code) {
-    conn.write((char) code);
+    conn.write(static_cast<char>(code));
 }

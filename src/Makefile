@@ -23,7 +23,7 @@ LDLIBS = -lsqlite3
 VPATH = include:deps
 
 # Targets
-PROGS = client inmemory #atdisk
+PROGS = client run_server
 
 all: $(PROGS)
 
@@ -38,25 +38,14 @@ all: $(PROGS)
 
 client: client.o messagehandler.o connection.o
 
-inmemory: CPPFLAGS+=-DINMEMORY=1
-inmemory: run_server.o inmemory.o atdisk.o server.o connection.o messagehandler.o
-
-atdisk: CPPFLAGS+=-DINMEMORY=0
-atdisk: run_ad_server.o atdisk.o inmemory.o server.o connection.o messagehandler.o
-
-run_im_server.o:
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ server.cc
-	#$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
-
-run_ad_server.o:
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ server.cc
+run_server: run_server.o inmemory.o atdisk.o server.o connection.o messagehandler.o
 
 # Phony targets
 .PHONY: all clean
 
 # Standard clean
 clean:
-	rm -f *.o client inmemory atdisk deps/*.d
+	rm -f *.o client run_server deps/*.d
 
 # Generate dependencies in *.d files
 # The line starting with an @ indicates print-suppression. Lines ending with a backslash indicate line splitting.

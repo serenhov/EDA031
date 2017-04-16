@@ -15,12 +15,13 @@
 #include <stdexcept>
 #include <cstdlib>
 #include <stdlib.h>
+#include <cstring>
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    if (argc != 2) {
-        cerr << "Usage: myserver port-number" << endl;
+    if (argc != 3) {
+        cerr << "Usage: myserver port-number server-version(mem/disk)" << endl;
         exit(1);
     }
 
@@ -38,14 +39,19 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-
-#if INMEMORY==1
-		cout << "Running INMEMORY version" << endl;
-		IDatabase* database = new InMemory();
-#elif INMEMORY==0
-		cout << "Running ATDISK version" << endl;
-		IDatabase* database = new AtDisk();
-#endif
+		IDatabase* database;
+		if(strcmp(argv[2], "mem") == 0) {
+			cout << "Running INMEMORY version" << endl;
+		 	database = new InMemory();
+		}
+		else if(strcmp(argv[2], "disk") == 0) {
+			cout << "Running ATDISK version" << endl;
+			database = new AtDisk();
+		}
+		else {
+        cerr << "You must choose server version. Provide \"mem\" for the in-memory version and \"disk\" for the disk version as the third argument." << endl;
+        exit(1);
+    }
 
     while (true) {
         auto conn = server.waitForActivity();
