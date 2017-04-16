@@ -25,6 +25,7 @@ all: news
 install: $(PROGS)
 	mkdir -p bin
 	cp inmemory bin
+	cp atdisk bin
 	cp client bin
 
 
@@ -43,6 +44,7 @@ news:
 	$(MAKE) -C src/
 	cp src/inmemory inmemory
 	cp src/client client
+	cp src/atdisk atdisk
 
 # Phony targets
 .PHONY: all clean

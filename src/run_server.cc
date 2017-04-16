@@ -1,6 +1,7 @@
 /* myserver.cc: sample server program */
 #include "idatabase.h"
 #include "atdisk.h"
+#include "inmemory.h"
 #include "messagehandler.h"
 
 #include "protocol.h"
@@ -13,6 +14,7 @@
 #include <string>
 #include <stdexcept>
 #include <cstdlib>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -36,7 +38,14 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
+
+#if INMEMORY==1
+		cout << "Running INMEMORY version" << endl;
+		IDatabase* database = new InMemory();
+#elif INMEMORY==0
+		cout << "Running ATDISK version" << endl;
 		IDatabase* database = new AtDisk();
+#endif
 
     while (true) {
         auto conn = server.waitForActivity();

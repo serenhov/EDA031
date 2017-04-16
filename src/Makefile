@@ -10,19 +10,20 @@ CPPFLAGS  = -std=c++11 -Iinclude/
 CXXFLAGS  = -g -O2 -Wall -W -pedantic-errors
 CXXFLAGS += -Wmissing-braces -Wparentheses -Wold-style-cast
 CXXFLAGS += -std=c++11
-LDFLAGS   = -g -lsqlite3
+LDFLAGS   = -g
 #CPPFLAGS += -stdlib=libc++
 #CXXFLAGS += -stdlib=libc++
 #LDFLAGS +=  -stdlib=libc++
 
 
 # Libraries
-LDLIBS =
+#LDLIBS = -L /usr/lib/x86_64-linux-gnu -lsqlite3
+LDLIBS = -lsqlite3
 
 VPATH = include:deps
 
 # Targets
-PROGS = client inmemory
+PROGS = client inmemory #atdisk
 
 all: $(PROGS)
 
@@ -34,19 +35,28 @@ all: $(PROGS)
 # $^ = The names of all the prerequisites, with spaces between them.
 
 # The dependency on libclientserver.a is not defined.
-#myserver: myserver.o
-#myclient: myclient.o
 
 client: client.o messagehandler.o connection.o
 
-inmemory: run_server.o atdisk.o server.o connection.o messagehandler.o
+inmemory: CPPFLAGS+=-DINMEMORY=1
+inmemory: run_server.o inmemory.o atdisk.o server.o connection.o messagehandler.o
+
+atdisk: CPPFLAGS+=-DINMEMORY=0
+atdisk: run_ad_server.o atdisk.o inmemory.o server.o connection.o messagehandler.o
+
+run_im_server.o:
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ server.cc
+	#$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
+
+run_ad_server.o:
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ server.cc
 
 # Phony targets
 .PHONY: all clean
 
 # Standard clean
 clean:
-	rm -f *.o $(PROGS) deps/*.d
+	rm -f *.o client inmemory atdisk deps/*.d
 
 # Generate dependencies in *.d files
 # The line starting with an @ indicates print-suppression. Lines ending with a backslash indicate line splitting.

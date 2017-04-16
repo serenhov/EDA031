@@ -1,10 +1,10 @@
+#include "idatabase.h"
 #include "atdisk.h"
 #include <sqlite3.h>
 #include <algorithm>
 #include <iostream>
 #include "connection.h"
 #include "connectionclosedexception.h"
-#include "idatabase.h"
 #include "protocol.h"
 #include "server.h"
 
@@ -85,10 +85,10 @@ void AtDisk::delete_group(messagehandler& msgHand, unsigned int& id) {
   while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
     int count = sqlite3_column_int(stmt, 0);
 
-	if(count != 1) {
-		msgHand.sendCode(Protocol::ANS_NAK);
-    	msgHand.sendCode(Protocol::ERR_NG_DOES_NOT_EXIST);
-	}
+		if(count != 1) {
+			msgHand.sendCode(Protocol::ANS_NAK);
+			msgHand.sendCode(Protocol::ERR_NG_DOES_NOT_EXIST);
+		}
   }
 
   sqlite3_finalize(stmt);
