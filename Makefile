@@ -23,8 +23,8 @@ LDLIBS =
 all: news
 
 install: news
-	cp client /bin
-	cp run_server /bin
+	cp src/client bin
+	cp src/run_server bin
 
 
 # Targets rely on implicit rules for compiling and linking, the following is executed!
@@ -40,15 +40,15 @@ install: news
 
 news:
 	$(MAKE) -C src/
-	cp src/client client
-	cp src/run_server run_server
+	#cp src/client client
+	#cp src/run_server run_server
 
 # Phony targets
 .PHONY: all clean
 
 # Standard clean
 clean:
-	rm -f client run_server newsgroups.db
+	rm -f client run_server newsgroups.db bin/client bin/run_server
 	sqlite3 newsgroups.db < schema.sql
 	$(MAKE) -C src/ clean
 
